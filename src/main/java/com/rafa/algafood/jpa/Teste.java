@@ -1,7 +1,5 @@
 package com.rafa.algafood.jpa;
 
-import java.util.List;
-
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -17,10 +15,20 @@ public class Teste {
 		
 		CadastroCozinha ccozinha = appContext.getBean(CadastroCozinha.class);
 		
-		List<Cozinha> cozinhas = ccozinha.listar();
+		//LISTA ALL
+//		List<Cozinha> cozinhas = ccozinha.listar();
+//		
+//		for (Cozinha cozinha : cozinhas) {
+//			System.out.println(cozinha.getNome());
+//		}
 		
-		for (Cozinha cozinha : cozinhas) {
-			System.out.println(cozinha.getNome());
-		}
+		//ADICIONAR
+//		Cozinha cozinha = new Cozinha();
+//		cozinha.setNome("Nordestina");
+//		
+//		ccozinha.adicionar(cozinha);
+		
+		Cozinha cozinha = ccozinha.buscar(2L);
+		System.out.println(cozinha.getNome());
 	}
 }
