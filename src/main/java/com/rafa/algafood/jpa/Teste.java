@@ -30,7 +30,6 @@ public class Teste {
 		
 		Cozinha cozinha = new Cozinha();
 		cozinha.setId(1L);
-		cozinha.setNome("Mexicana");
-		ccozinha.salvar(cozinha);
+		ccozinha.remover(cozinha);
 	}
 }
