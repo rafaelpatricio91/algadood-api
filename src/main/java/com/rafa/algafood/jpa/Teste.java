@@ -28,7 +28,9 @@ public class Teste {
 //		
 //		ccozinha.adicionar(cozinha);
 		
-		Cozinha cozinha = ccozinha.buscar(2L);
-		System.out.println(cozinha.getNome());
+		Cozinha cozinha = new Cozinha();
+		cozinha.setId(1L);
+		cozinha.setNome("Mexicana");
+		ccozinha.salvar(cozinha);
 	}
 }
