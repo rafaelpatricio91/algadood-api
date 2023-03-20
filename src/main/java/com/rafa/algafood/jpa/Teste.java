@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.rafa.algafood.AlgafoodApiApplication;
 import com.rafa.algafood.domain.model.Cozinha;
+import com.rafa.algafood.domain.repositoy.CozinhaRepository;
 
 public class Teste {
 	public static void main(String[] args) {
@@ -13,7 +14,7 @@ public class Teste {
 				.web(WebApplicationType.NONE)
 				.run(args);
 		
-		CadastroCozinha ccozinha = appContext.getBean(CadastroCozinha.class);
+		CozinhaRepository ccozinha = appContext.getBean(CozinhaRepository.class);
 		
 		//LISTA ALL
 //		List<Cozinha> cozinhas = ccozinha.listar();
