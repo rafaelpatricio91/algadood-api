@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.rafa.algafood.AlgafoodApiApplication;
 import com.rafa.algafood.domain.model.Cozinha;
-import com.rafa.algafood.domain.repositoy.CozinhaRepository;
+import com.rafa.algafood.domain.repository.CozinhaRepository;
 
 public class Teste {
 	public static void main(String[] args) {

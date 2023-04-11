@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rafa.algafood.domain.model.Restaurante;
-import com.rafa.algafood.domain.repositoy.RestauranteRepository;
+import com.rafa.algafood.domain.repository.RestauranteRepository;
 
 public class RestauranteRepositoryImpl implements RestauranteRepository {
 

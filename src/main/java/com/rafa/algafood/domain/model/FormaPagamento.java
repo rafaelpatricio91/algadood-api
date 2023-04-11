@@ -11,25 +11,25 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
+@Table(name = "forma_pagamento")
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Entity
-@Table(name = "cozinha")
-public class Cozinha {
+public class FormaPagamento {
 	
-	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
 	
 	@Column(nullable = false)
-	private String nome;
+	private String descricao;
 	
-	public Cozinha() {}
-	
-	public Cozinha(Long id, String nome) {
+	public FormaPagamento() {}
+
+	public FormaPagamento(Long id, String descricao) {
 		this.id = id;
-		this.nome = nome;
+		this.descricao = descricao;
 	}
 }

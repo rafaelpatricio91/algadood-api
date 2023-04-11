@@ -1,4 +1,4 @@
-package com.rafa.algafood.domain.repositoy;
+package com.rafa.algafood.domain.repository;
 
 import java.util.List;
 

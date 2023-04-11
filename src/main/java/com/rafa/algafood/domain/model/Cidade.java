@@ -1,8 +1,5 @@
 package com.rafa.algafood.domain.model;
 
-import java.math.BigDecimal;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,30 +16,25 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "restaurante")
-public class Restaurante {
-	
-	@EqualsAndHashCode.Include
+@Table(name = "cidade")
+public class Cidade {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
 	
-	@Column(name = "nome", nullable = false)
 	private String nome;
-	
-	@Column(name = "taxa_frete", nullable = false)
-	private BigDecimal taxaFrete;
 	
 	@ManyToOne
 	@JoinColumn(nullable = false)
-	private Cozinha cozinha;
+	private Estado estado;
 	
-	public Restaurante() {}
-	
-	public Restaurante(Long id, String nome, BigDecimal taxaFrete) {
+	public Cidade() {}
+
+	public Cidade(Long id, String nome, Estado estado) {
 		this.id = id;
 		this.nome = nome;
-		this.taxaFrete = taxaFrete;
+		this.estado = estado;
 	}
-
 }

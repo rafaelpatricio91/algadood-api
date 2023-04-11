@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rafa.algafood.domain.model.Cozinha;
-import com.rafa.algafood.domain.repositoy.CozinhaRepository;
+import com.rafa.algafood.domain.repository.CozinhaRepository;
 
 public class CozinhaRepositoryImpl implements CozinhaRepository {
 

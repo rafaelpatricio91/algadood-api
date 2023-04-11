@@ -1,6 +1,5 @@
 package com.rafa.algafood.domain.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,20 +14,19 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "cozinha")
-public class Cozinha {
-	
-	@EqualsAndHashCode.Include
+@Table(name = "estado")
+public class Estado {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@EqualsAndHashCode.Include
 	private Long id;
 	
-	@Column(nullable = false)
 	private String nome;
 	
-	public Cozinha() {}
-	
-	public Cozinha(Long id, String nome) {
+	public Estado() {}
+
+	public Estado(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
 	}
