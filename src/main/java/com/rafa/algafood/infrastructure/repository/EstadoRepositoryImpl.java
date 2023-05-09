@@ -6,9 +6,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.stereotype.Repository;
+
 import com.rafa.algafood.domain.model.Estado;
 import com.rafa.algafood.domain.repository.EstadoRepository;
 
+@Repository
 public class EstadoRepositoryImpl implements EstadoRepository {
 
 	@PersistenceContext
