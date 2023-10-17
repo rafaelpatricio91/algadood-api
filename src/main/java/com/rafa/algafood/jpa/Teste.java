@@ -31,6 +31,6 @@ public class Teste {
 		
 		Cozinha cozinha = new Cozinha();
 		cozinha.setId(1L);
-		ccozinha.remover(cozinha);
+//		ccozinha.remover(cozinha);
 	}
 }
