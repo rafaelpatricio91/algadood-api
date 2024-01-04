@@ -31,4 +31,8 @@ public class RestauranteService {
 					String.format("Cozinha de codigo %d nao pode ser removida pois esta em uso - id: ", id));
 		}
 	}
+	
+	public Restaurante atualizar(Restaurante restaurante) {
+		return restauranteRepository.salvar(restaurante);
+	}
 }
