@@ -1,6 +1,7 @@
 package com.rafa.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rafa.algafood.domain.exception.EntidadeNaoEncontradaException;
 import com.rafa.algafood.domain.model.Cidade;
-import com.rafa.algafood.domain.model.Cozinha;
 import com.rafa.algafood.domain.model.Estado;
 import com.rafa.algafood.domain.repository.EstadoRepository;
 import com.rafa.algafood.domain.service.CidadeService;
@@ -38,13 +38,13 @@ public class CidadeController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Cidade> buscarPorId(@PathVariable Long id) {
-		Cidade cidade = service.buscarPorId(id);
+		Optional<Cidade> cidade = service.buscarPorId(id);
 		
-		if (cidade == null) {
+		if (cidade.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		return ResponseEntity.ok(cidade);
+		return ResponseEntity.ok(cidade.get());
 	}
 	
 	@PostMapping
@@ -67,15 +67,15 @@ public class CidadeController {
 	public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Cidade cidade) {
 		try {
 			validaEstadoExistente(cidade);
-			Cidade cidadeBase = service.buscarPorId(id);
-			if (cidadeBase == null) {
+			Optional<Cidade> cidadeBase = service.buscarPorId(id);
+			if (cidadeBase.isEmpty()) {
 				return ResponseEntity.notFound().build();
 			}
 			
-			BeanUtils.copyProperties(cidade, cidadeBase, "id");
-			cidadeBase = service.atualizar(cidadeBase);
+			BeanUtils.copyProperties(cidade, cidadeBase.get(), "id");
+			Cidade cidadeAtualizada = service.atualizar(cidadeBase.get());
 			
-			return ResponseEntity.ok(cidadeBase);
+			return ResponseEntity.ok(cidadeAtualizada);
 			
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -96,9 +96,9 @@ public class CidadeController {
 	
 	private void validaEstadoExistente(Cidade cidade) {
 		Long estadoId = cidade.getEstado().getId();
-		Estado estado = estadoRepository.buscar(estadoId);
+		Optional<Estado> estado = estadoRepository.findById(estadoId);
 
-		if (estado == null) {
+		if (estado.isEmpty()) {
 			throw new EntidadeNaoEncontradaException("Nao existe cadastro de estado com codigo " + estadoId);
 		}
 	}

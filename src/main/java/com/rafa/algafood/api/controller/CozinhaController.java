@@ -1,6 +1,7 @@
 package com.rafa.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,21 +37,22 @@ public class CozinhaController {
 	
 	@GetMapping
 	public List<Cozinha> listar() {
-		return cozinhaRepository.listar();
+		return cozinhaRepository.findAll();
 	}
 	
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public CozinhasXmlWrapper listarXml() {
-		return new CozinhasXmlWrapper(cozinhaRepository.listar() );
+		return new CozinhasXmlWrapper(cozinhaRepository.findAll() );
 	}
 	
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable("cozinhaId") Long cozinhaId) {
-		Cozinha cozinha = cozinhaRepository.buscar(cozinhaId);
+//		Cozinha cozinha = cozinhaRepository.findById(cozinhaId);
+		Optional<Cozinha> cozinha = cozinhaRepository.findById(cozinhaId);
 		
 		//return ResponseEntity.status(HttpStatus.OK).body(cozinha);
-		if (cozinha != null) {
-			return ResponseEntity.ok(cozinha); //Forma mais simplificada da linha anterior
+		if (cozinha.isPresent()) {
+			return ResponseEntity.ok(cozinha.get()); //Forma mais simplificada da linha anterior
 		}
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();//		HttpHeaders headers = new HttpHeaders();
@@ -70,14 +72,14 @@ public class CozinhaController {
 	
 	@PutMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable("cozinhaId") Long cozinhaId,@RequestBody Cozinha cozinha) {
-		Cozinha cozinhaAtual = cozinhaRepository.buscar(cozinhaId);
-		if (cozinhaAtual == null) {
+		Optional<Cozinha> cozinhaAtual = cozinhaRepository.findById(cozinhaId);
+		if (!cozinhaAtual.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-		cozinhaAtual = cozinhaService.salvar(cozinhaAtual);
+		BeanUtils.copyProperties(cozinha, cozinhaAtual.get(), "id");
+		Cozinha cozinhaSalva = cozinhaService.salvar(cozinhaAtual.get());
 		
-		return ResponseEntity.ok(cozinhaAtual);
+		return ResponseEntity.ok(cozinhaSalva);
 	}
 	
 	@DeleteMapping("/{cozinhaId}")

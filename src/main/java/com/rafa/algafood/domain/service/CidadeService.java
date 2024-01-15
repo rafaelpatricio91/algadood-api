@@ -1,6 +1,7 @@
 package com.rafa.algafood.domain.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,11 +21,11 @@ public class CidadeService {
 	private CidadeRepository repository;
 	
 	public List<Cidade> listar() {
-		return repository.listar();
+		return repository.findAll();
 	}
 	
-	public Cidade buscarPorId(Long id) {
-		return repository.buscar(id);
+	public Optional<Cidade> buscarPorId(Long id) {
+		return repository.findById(id);
 	}
 	
 	@Transactional
@@ -33,28 +34,28 @@ public class CidadeService {
 			return null;
 		}
 		
-		return repository.salvar(cidade);
+		return repository.save(cidade);
 	}
 	
 	@Transactional
 	public Cidade atualizar(Cidade cidade) {
-		Cidade cidadeBase = repository.buscar(cidade.getId() );
+		Optional<Cidade> cidadeBase = repository.findById(cidade.getId() );
 		
 		if (cidadeBase == null) {
 			return null;
 		}
 		
-		return repository.salvar(cidadeBase);
+		return repository.save(cidadeBase.get());
 	}
 	
 	@Transactional
 	public void remover(Long id) {
 		try {
-			Cidade cidadeBase = repository.buscar(id);
-			if (cidadeBase == null) {
+			Optional<Cidade> cidadeBase = repository.findById(id);
+			if (cidadeBase.isEmpty()) {
 				throw new EmptyResultDataAccessException(1);
 			}
-			repository.remover(cidadeBase);
+			repository.delete(cidadeBase.get());
 		} catch (EmptyResultDataAccessException ex) {
 			throw new EntidadeNaoEncontradaException(
 					String.format("Cidade de codigo %d nao pode ser encontrada", id));

@@ -1,6 +1,7 @@
 package com.rafa.algafood.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,18 +29,18 @@ public class EstadoController {
 
 	@GetMapping
 	public List<Estado> listar() {
-		return estadoRepository.listar();
+		return estadoRepository.findAll();
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Estado> buscar(@PathVariable Long id) {
-		Estado estado = estadoRepository.buscar(id);
+		Optional<Estado> estado = estadoRepository.findById(id);
 		
-		if (estado == null) {
+		if (estado.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		return ResponseEntity.ok(estado);
+		return ResponseEntity.ok(estado.get());
 	}
 	
 	@PostMapping
@@ -51,23 +52,23 @@ public class EstadoController {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Estado> atualizar(@PathVariable("id") Long estadoId, @RequestBody Estado estado) {
-		Estado estadoBase = estadoRepository.buscar(estadoId);
+		Optional<Estado> estadoBase = estadoRepository.findById(estadoId);
 		
-		if (estadoBase == null) {
+		if (estadoBase.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		estado.setId(estadoBase.getId() );
-		estadoBase = service.adicionar(estado);
+		estado.setId(estadoBase.get().getId() );
+		Estado estadoAtualizado = service.adicionar(estado);
 		
-		return ResponseEntity.ok(estadoBase);
+		return ResponseEntity.ok(estadoAtualizado);
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Estado> remover(@PathVariable("id") Long id) {
-		Estado estado = estadoRepository.buscar(id);
+		Optional<Estado> estado = estadoRepository.findById(id);
 		
-		if (estado == null) {
+		if (estado.isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}
 		

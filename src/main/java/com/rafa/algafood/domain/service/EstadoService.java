@@ -19,13 +19,13 @@ public class EstadoService {
 
 	@Transactional
 	public Estado adicionar(Estado estado) {
-		return repository.salvar(estado);
+		return repository.save(estado);
 	}
 	
 	@Transactional
 	public void remover(Long id) {
 		try {
-			repository.remover(id);
+			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException ex) {
 			throw new EntidadeNaoEncontradaException(
 				String.format("Estado de codigo %d nao pode ser encontrado", id));
@@ -36,6 +36,6 @@ public class EstadoService {
 	}
 	
 	public Estado atualizar(Estado estado) {
-		return repository.salvar(estado);
+		return repository.save(estado);
 	}
 }
