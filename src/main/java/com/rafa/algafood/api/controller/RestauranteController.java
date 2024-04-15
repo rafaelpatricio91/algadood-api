@@ -71,7 +71,6 @@ public class RestauranteController {
 	}
 	
 	@PutMapping("/{id}")
-	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<?> atualizar(@PathVariable Long id,@RequestBody Restaurante restaurante) {
 		
 		try {
@@ -83,14 +82,15 @@ public class RestauranteController {
 				return ResponseEntity.notFound().build();
 			}
 			
-			BeanUtils.copyProperties(restaurante, restauranteBusca.get(), "id");
-			restaurante = restauranteRepository.save(restauranteBusca.get());
+			BeanUtils.copyProperties(restaurante, restauranteBusca.get(), 
+					"id","formasPagamento","endereco","dataCadastro","produtos");
+			Restaurante restauranteAtual = restauranteRepository.save(restauranteBusca.get());
+			
+			return ResponseEntity.ok(restauranteAtual);
 			
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
-		
-		return ResponseEntity.ok(restaurante);
 		
 	}
 	
