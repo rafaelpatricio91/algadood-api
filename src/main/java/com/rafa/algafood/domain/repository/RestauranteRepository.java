@@ -13,7 +13,7 @@ public interface RestauranteRepository extends CustomJpaRepository<Restaurante, 
 	
 	List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 	
-	@Query(" from Restaurante r join r.cozinha left join r.formasPagamento ")
+	@Query(" from Restaurante r join r.cozinha ")
 	List<Restaurante> findAll();
 		
 }
